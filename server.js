@@ -2,7 +2,7 @@ const inquirer = require("inquirer");
 const cTable = require("console.table");
 const mysql= require("mysql2");
 
-
+//connects to sql database
 const db = mysql.createConnection(
 	{
 		host: "localhost",
@@ -19,7 +19,7 @@ db.connect(err =>{
     if(err) throw err;
     promptUser();
 });
-
+//main prompt of actions
 const promptUser = () =>{
     inquirer.prompt([
         {   
@@ -98,8 +98,7 @@ const promptUser = () =>{
         }
     })
 }
-// inner join only joins ones in common between two tables
-// 
+// function to display all eployees stored
 viewEmployees = () =>{
     console.log("Showing all employees: \n");
     const sql = `SELECT employee.id,
@@ -118,6 +117,7 @@ viewEmployees = () =>{
         promptUser();
     });
 };
+// function to display all roles stored
 viewRoles = () =>{
     console.log("Showing all roles: \n");
     const sql = `SELECT roles.id,
@@ -131,7 +131,7 @@ viewRoles = () =>{
         promptUser();
     });
 };
-
+// function to display all departments stored
 viewDepartments = () => {
 	console.log("Showing all departments: \n");
 	const sql = `SELECT * FROM department`;
@@ -141,7 +141,7 @@ viewDepartments = () => {
 		promptUser();
 	});
 };
-
+// function to create a new employee and add it to database
 addEmployee = () =>{
     console.log("Adding employee: \n");
     inquirer.prompt([
@@ -199,7 +199,7 @@ addEmployee = () =>{
         });
     });
 };
-
+// function to create a new role and add it to database
 addRole= () =>{
     console.log("Adding a new role: \n");
 		inquirer
@@ -243,7 +243,7 @@ addRole= () =>{
 				});
 			});
 };
-
+// function to create a new department and add it to database
 addDepartment = () =>{
     console.log("Adding a new department: \n");
     inquirer.prompt({
@@ -260,7 +260,7 @@ addDepartment = () =>{
         });
     });
 };
-
+// function to change an employee's role 
 updateRole = () =>{
     console.log(`Updating an employee's role: \n`);
     const empSql = `SELECT * FROM employee`;
@@ -303,6 +303,8 @@ updateRole = () =>{
         });
     });
 };
+// function to change an employee's manager
+
 updateManager = () =>{
     console.log("Updating an employee's manager: \n");
     const manSql = `SELECT * FROM employee`;
@@ -334,6 +336,7 @@ updateManager = () =>{
         });
     });
 };
+// function to view all employees by their manager
 viewByMan = () =>{
     console.log("Showing all employees by manager: \n");
     const sql = `SELECT employee.first_name,
@@ -346,6 +349,7 @@ viewByMan = () =>{
 		promptUser();
 	});
 };
+// function to view all employees by their department
 viewByDept = () =>{
     console.log("Showing all employees by department: \n");
     const sql = `SELECT employee.first_name,
@@ -359,6 +363,7 @@ viewByDept = () =>{
         promptUser();
     });
 };
+// function to delete a department
 deleteDep = () =>{
     console.log("Deleting a department: \n");
     const depSql = `SELECT * FROM department`;
@@ -383,7 +388,7 @@ deleteDep = () =>{
         });
     });
 };
-
+// function to delete a role
 deleteRole = () => {
 	console.log("Deleting a role: \n");
 	const rolesSql = `SELECT * FROM roles`;
@@ -410,6 +415,7 @@ deleteRole = () => {
 			});
 	});
 };
+// function to delete a employee
 deleteEmp = () => {
 	console.log("Deleting an employee: \n");
 	const emSql = `SELECT * FROM employee`;
@@ -436,7 +442,7 @@ deleteEmp = () => {
 			});
 	});
 };
-
+// function to view each department's total of employee salaries
 viewBudget = ()=>{
     console.log("Showing each department's budget: \n");
     const sql = `SELECT department_id,
